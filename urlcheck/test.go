@@ -60,7 +60,7 @@ func (t Test) CheckCode(resp *http.Response) error {
 		code = 200
 	}
 	if resp.StatusCode != code {
-		return errors.New("Expected status code " + strconv.Itoa(code) + ", received " + strconv.Itoa(resp.StatusCode))
+		return t.NewError("Expected status code " + strconv.Itoa(code) + ", received " + strconv.Itoa(resp.StatusCode))
 	}
 	return nil
 }
@@ -82,10 +82,14 @@ func (t Test) CheckContent(resp *http.Response) error {
 	}
 
 	if !match {
-		return errors.New("Expected content '" + t.Content + "', not found in response (" + strconv.Itoa(len(rcvdbytes)) + " bytes)")
+		return t.NewError("Expected content '" + t.Content + "', not found in response (" + strconv.Itoa(len(rcvdbytes)) + " bytes)")
 	}
 
 	return nil
+}
+
+func (t Test) NewError(message string) error {
+	return errors.New(strings.Title(strings.ToLower(t.MethodName())) + " " + t.Url + ": " + message)
 }
 
 func (t Test) MethodName() string {
