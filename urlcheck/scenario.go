@@ -14,8 +14,16 @@ func (s Scenario) Test() error {
 	for i, t := range s.Tests {
 		err := t.Test()
 		if err != nil {
-			return errors.New("Step " + strconv.Itoa(i+1) + ": " + err.Error())
+			return errors.New(s.String() + " step " + strconv.Itoa(i+1) + ": " + err.Error())
 		}
 	}
 	return nil
+}
+
+func (s Scenario) String() string {
+	if s.Name == "" {
+		return "Unnamed scenario"
+	} else {
+		return "Scenario " + s.Name
+	}
 }
