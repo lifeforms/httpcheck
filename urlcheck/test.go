@@ -2,7 +2,9 @@ package urlcheck
 
 import "errors"
 import "fmt"
+import "io/ioutil"
 import "net/http"
+import "regexp"
 import "strconv"
 import "strings"
 
@@ -25,8 +27,16 @@ type Test struct {
 
 func (t Test) Test() (err error) {
 	resp, err := t.DoRequest()
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
 	if err == nil {
 		err = t.CheckCode(resp)
+	}
+	if err == nil {
+		err = t.CheckContent(resp)
 	}
 	return
 }
@@ -56,6 +66,29 @@ func (t Test) CheckCode(resp *http.Response) error {
 	if resp.StatusCode != code {
 		return errors.New("Expected status code " + strconv.Itoa(code) + ", received " + strconv.Itoa(resp.StatusCode))
 	}
+	return nil
+}
+
+func (t Test) CheckContent(resp *http.Response) error {
+	if t.Content == "" {
+		return nil
+	}
+
+	rcvdbytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	rcvdcontent := string(rcvdbytes)
+
+	match, err := regexp.MatchString(t.Content, rcvdcontent)
+	if err != nil {
+		return err
+	}
+
+	if !match {
+		return errors.New("Expected content '" + t.Content + "', not found in response (" + strconv.Itoa(len(rcvdbytes)) + " bytes)")
+	}
+
 	return nil
 }
 
