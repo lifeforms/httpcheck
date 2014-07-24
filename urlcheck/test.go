@@ -1,7 +1,6 @@
 package urlcheck
 
 import "errors"
-import "fmt"
 import "io/ioutil"
 import "net/http"
 import "regexp"
@@ -42,7 +41,6 @@ func (t Test) Test() (err error) {
 }
 
 func (t Test) DoRequest() (resp *http.Response, err error) {
-	fmt.Println("testing:", t.Url)
 	req, err := http.NewRequest(t.MethodName(), t.Url, strings.NewReader(t.Data))
 	if err != nil {
 		return nil, err
@@ -53,8 +51,6 @@ func (t Test) DoRequest() (resp *http.Response, err error) {
 	}
 
 	resp, err = client.Do(req)
-	fmt.Println("response:", resp)
-	fmt.Println("error:", err)
 	return resp, err
 }
 
