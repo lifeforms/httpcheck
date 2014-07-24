@@ -1,11 +1,13 @@
 package urlcheck
 
-import "errors"
-import "io/ioutil"
-import "net/http"
-import "regexp"
-import "strconv"
-import "strings"
+import (
+	"errors"
+	"io/ioutil"
+	"net/http"
+	"regexp"
+	"strconv"
+	"strings"
+)
 
 type Method int
 
@@ -25,64 +27,70 @@ type Test struct {
 }
 
 func (t Test) Test() (err error) {
-	resp, err := t.DoRequest()
+	code, body, err := t.DoRequest()
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
 
 	if err == nil {
-		err = t.CheckCode(resp)
+		err = t.CheckCode(code)
 	}
 	if err == nil {
-		err = t.CheckContent(resp)
+		err = t.CheckContent(body)
 	}
 	return
 }
 
-func (t Test) DoRequest() (resp *http.Response, err error) {
+func (t Test) DoRequest() (code int, body string, err error) {
 	req, err := http.NewRequest(t.MethodName(), t.Url, strings.NewReader(t.Data))
 	if err != nil {
-		return nil, err
+		return 0, "", err
 	}
 
 	for k, v := range t.Headers {
 		req.Header.Add(k, v)
 	}
 
-	resp, err = client.Do(req)
-	return resp, err
-}
-
-func (t Test) CheckCode(resp *http.Response) error {
-	code := t.Code
-	if code == 0 {
-		code = 200
-	}
-	if resp.StatusCode != code {
-		return t.NewError("Expected status code " + strconv.Itoa(code) + ", received " + strconv.Itoa(resp.StatusCode))
-	}
-	return nil
-}
-
-func (t Test) CheckContent(resp *http.Response) error {
-	if t.Content == "" {
-		return nil
+	resp, err := client.Do(req)
+	if err != nil {
+		return 0, "", err
 	}
 
 	rcvdbytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return err
+		return 0, "", err
 	}
-	rcvdcontent := string(rcvdbytes)
+	body = string(rcvdbytes)
+	code = resp.StatusCode
 
-	match, err := regexp.MatchString(t.Content, rcvdcontent)
+	defer resp.Body.Close()
+
+	return code, body, nil
+}
+
+func (t Test) CheckCode(code int) error {
+	expect := t.Code
+	if expect == 0 {
+		expect = 200
+	}
+	if code != expect {
+		return t.NewError("Expected status code " + strconv.Itoa(expect) + ", received " + strconv.Itoa(code))
+	}
+	return nil
+}
+
+func (t Test) CheckContent(body string) error {
+	if t.Content == "" {
+		return nil
+	}
+
+	match, err := regexp.MatchString(t.Content, body)
 	if err != nil {
 		return err
 	}
 
 	if !match {
-		return t.NewError("Expected content '" + t.Content + "', not found in response (" + strconv.Itoa(len(rcvdbytes)) + " bytes)")
+		return t.NewError("Expected content '" + t.Content + "', not found in response (" + strconv.Itoa(len(body)) + " bytes)")
 	}
 
 	return nil
