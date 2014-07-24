@@ -11,10 +11,11 @@ const (
 
 type Test struct {
 	Url           string
+	Content       string
+	Code          int
 	Method        Method
 	Data          string
-	Code          int
-	Content       string
+	Headers       map[string]string
 	SkipSSLVerify bool
 }
 
