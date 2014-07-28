@@ -11,6 +11,8 @@ type Tester interface {
 	Test() error
 }
 
+var Verbose = false
+
 var client *http.Client
 
 // Set up a HTTP client with a cookie jar

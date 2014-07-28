@@ -2,6 +2,7 @@ package urlcheck
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"regexp"
@@ -30,15 +31,20 @@ type Test struct {
 // Test makes a HTTP call and checks the response
 func (t Test) Test() (err error) {
 	code, body, err := t.DoRequest()
-	if err != nil {
-		return err
-	}
-
 	if err == nil {
 		err = t.CheckCode(code)
 	}
 	if err == nil {
 		err = t.CheckContent(body)
+	}
+
+	// Log an error
+	if Verbose {
+		if err == nil {
+			fmt.Println(t.String() + ": OK")
+		} else {
+			fmt.Println(err)
+		}
 	}
 	return
 }
@@ -102,7 +108,11 @@ func (t Test) CheckContent(body string) error {
 }
 
 func (t Test) NewError(message string) error {
-	return errors.New(strings.Title(strings.ToLower(t.MethodName())) + " " + t.Url + ": " + message)
+	return errors.New(t.String() + ": " + message)
+}
+
+func (t Test) String() string {
+	return strings.Title(strings.ToLower(t.MethodName())) + " " + t.Url
 }
 
 func (t Test) MethodName() string {
