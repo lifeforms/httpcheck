@@ -16,16 +16,18 @@ const (
 	POST
 )
 
+// A single HTTP action, with the expected results.
 type Test struct {
-	Url           string
-	Content       string
-	Code          int
-	Method        Method
-	Data          string
-	Headers       map[string]string
-	SkipSSLVerify bool
+	Url           string            // A fully specified URL including the protocol
+	Content       string            // Expected content as a regexp, e.g. "Hello World"
+	Code          int               // Expected HTTP response code
+	Method        Method            // HTTP method, i.e. GET or POST
+	Data          string            // Optional post data
+	Headers       map[string]string // Optional headers to add to the request
+	SkipSSLVerify bool              // If true, SSL server verification is skipped
 }
 
+// Test makes a HTTP call and checks the response
 func (t Test) Test() (err error) {
 	code, body, err := t.DoRequest()
 	if err != nil {
@@ -41,6 +43,7 @@ func (t Test) Test() (err error) {
 	return
 }
 
+// DoRequest uses the global http object to send a HTTP request
 func (t Test) DoRequest() (code int, body string, err error) {
 	req, err := http.NewRequest(t.MethodName(), t.Url, strings.NewReader(t.Data))
 	if err != nil {
@@ -68,6 +71,7 @@ func (t Test) DoRequest() (code int, body string, err error) {
 	return code, body, nil
 }
 
+// CheckCode inspects the received HTTP response code
 func (t Test) CheckCode(code int) error {
 	expect := t.Code
 	if expect == 0 {
@@ -79,6 +83,7 @@ func (t Test) CheckCode(code int) error {
 	return nil
 }
 
+// CheckContent inspects the returned HTTP response body
 func (t Test) CheckContent(body string) error {
 	if t.Content == "" {
 		return nil

@@ -2,11 +2,15 @@ package urlcheck
 
 import "errors"
 
+// A Server has a number of objects to test. These can be Tests or Scenarios.
 type Server struct {
 	Name      string
 	Scenarios []Tester
 }
 
+// Test runs tests on the scenarios and tests for this server.
+// It returns an error if one or more scenarios/tests has errors, or nil otherwise.
+// In case there are multiple errors, the error contains the concatenated messages.
 func (server Server) Test() error {
 	var allerrors []error
 	for _, scenario := range server.Scenarios {
