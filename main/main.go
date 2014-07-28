@@ -4,13 +4,28 @@ import "fmt"
 import "github.com/lifeforms/urlcheck/urlcheck"
 
 func main() {
-	sc := urlcheck.Scenario{
-		Tests: urlcheck.Tests{
-			urlcheck.Test{Url: "http://sim.dt.lfms.nl/", Content: "sim"},
-			urlcheck.Test{Url: "http://www.lifeforms.nl/", Content: "DEHUMANIZE"},
-			urlcheck.Test{Url: "https://www.lifeforms.nl/", Content: "DEHUMANIZo"},
+	server := urlcheck.Server{
+		Name: "tau",
+		Scenarios: []urlcheck.Scenario{
+			urlcheck.Scenario{
+				Name: "lifeforms",
+				Tests: urlcheck.Tests{
+					urlcheck.Test{Url: "http://www.lifeforms.nl/", Content: "DEHUMANIZE"},
+					urlcheck.Test{Url: "https://www.lifeforms.nl/", Content: "DEHUMANIZE"},
+				},
+			},
+			urlcheck.Scenario{
+				Name: "ionica",
+				Tests: urlcheck.Tests{
+					urlcheck.Test{Url: "http://ionica.nl/", Content: "Ionica Smeets"},
+				},
+			},
 		},
 	}
-	err := sc.Test()
-	fmt.Println("Test result:", err)
+	err := server.Test()
+	if err != nil {
+		fmt.Println("Failures:", err)
+	} else {
+		fmt.Println("OK")
+	}
 }
