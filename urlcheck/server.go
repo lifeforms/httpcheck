@@ -18,8 +18,11 @@ func (server Server) Test() error {
 
 	if len(allerrors) > 0 {
 		errorstr := ""
-		for _, err := range allerrors {
-			errorstr += err.Error() + "\n"
+		for i, err := range allerrors {
+			if i > 0 {
+				errorstr += "\n"
+			}
+			errorstr += err.Error()
 		}
 		return errors.New(errorstr)
 	}
