@@ -18,6 +18,9 @@ func (server Server) Test() error {
 
 	if len(allerrors) > 0 {
 		errorstr := ""
+		if server.Name != "" {
+			errorstr = "Server " + server.Name + ": "
+		}
 		for i, err := range allerrors {
 			if i > 0 {
 				errorstr += "\n"
