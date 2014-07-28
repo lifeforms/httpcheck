@@ -11,8 +11,6 @@ type Tester interface {
 	Test() error
 }
 
-type Manifest []Server
-
 var client *http.Client
 
 // Set up a HTTP client with a cookie jar
