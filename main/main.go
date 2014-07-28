@@ -7,7 +7,8 @@ func main() {
 	manifest := urlcheck.Manifest{
 		urlcheck.Server{
 			Name: "tau",
-			Scenarios: []urlcheck.Scenario{
+			Scenarios: []urlcheck.Tester{
+				urlcheck.Test{Url: "http://www.lifeforms.nl/nonexistent", Code: 404},
 				urlcheck.Scenario{
 					Name: "lifeforms",
 					Tests: urlcheck.Tests{

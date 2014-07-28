@@ -4,7 +4,7 @@ import "errors"
 
 type Server struct {
 	Name      string
-	Scenarios []Scenario
+	Scenarios []Tester
 }
 
 func (server Server) Test() error {
