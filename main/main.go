@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/lifeforms/urlcheck/urlcheck"
 	"io/ioutil"
+	"os"
 )
 
 func parseArgs() (manifestfile string, verbose bool) {
@@ -42,6 +43,7 @@ func main() {
 
 	if err != nil {
 		fmt.Println("Failures:", err)
+		os.Exit(1)
 	} else {
 		fmt.Println("OK")
 	}
