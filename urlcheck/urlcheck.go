@@ -15,7 +15,7 @@ var Timeout uint = 5
 var Verbose = false
 var Version = "urlcheck/2.0"
 
-var client *http.Client
+var client http.Client
 
 // Set up a HTTP client with a cookie jar
 func init() {
@@ -28,7 +28,7 @@ func init() {
 		log.Fatal(err)
 	}
 
-	client = &http.Client{
+	client = http.Client{
 		Jar: jar,
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
 			req.Header.Add("User-Agent", Version)
