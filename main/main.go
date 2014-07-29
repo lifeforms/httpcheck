@@ -48,6 +48,8 @@ func main() {
 		fmt.Println("Failures:", err)
 		os.Exit(1)
 	} else {
-		fmt.Println("OK")
+		if verbose {
+			fmt.Println("OK")
+		}
 	}
 }
