@@ -57,7 +57,7 @@ func (t Test) DoRequest() (code int, body string, err error) {
 		return 0, "", err
 	}
 
-	req.Header.Add("User-Agent", Version)
+	req.Header.Add("User-Agent", version)
 	for k, v := range t.Headers {
 		req.Header.Add(k, v)
 	}

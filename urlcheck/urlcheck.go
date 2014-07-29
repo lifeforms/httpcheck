@@ -13,9 +13,9 @@ type Tester interface {
 
 var Timeout uint = 5
 var Verbose = false
-var Version = "urlcheck/2.0"
 
 var client http.Client
+var version = "urlcheck/2.0"
 
 // Set up a HTTP client with a cookie jar
 func init() {
@@ -31,7 +31,7 @@ func init() {
 	client = http.Client{
 		Jar: jar,
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
-			req.Header.Add("User-Agent", Version)
+			req.Header.Add("User-Agent", version)
 			return nil
 		},
 	}
