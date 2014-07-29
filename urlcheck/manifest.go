@@ -3,7 +3,7 @@ package urlcheck
 import "errors"
 import "gopkg.in/yaml.v1"
 
-// Manifest contains multiple Servers, each having Tests and Scenarios.
+// Manifest contains one or more Servers, each having some Scenarios.
 type Manifest []Server
 
 // Test runs tests on all servers in the manifest.
