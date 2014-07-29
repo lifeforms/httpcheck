@@ -1,6 +1,7 @@
 package urlcheck
 
 import "errors"
+import "gopkg.in/yaml.v1"
 
 // Manifest contains multiple Servers, each having Tests and Scenarios.
 type Manifest []Server
@@ -28,4 +29,13 @@ func (m Manifest) Test() error {
 		return errors.New(errorstr)
 	}
 	return nil
+}
+
+func FromYAML(y []byte) (Manifest, error) {
+	var manifest Manifest
+	err := yaml.Unmarshal(y, &manifest)
+	if err != nil {
+		return nil, err
+	}
+	return manifest, nil
 }

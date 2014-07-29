@@ -8,8 +8,8 @@ type Tests []Test
 // A Scenario describes multiple tests executed in-order.
 // Cookies are preserved within a scenario, so tests can depend on earlier tests.
 type Scenario struct {
-	Tests Tests
 	Name  string
+	Tests Tests "test,flow"
 }
 
 // Test runs the tests in this scenario in order, stopping at the first error.

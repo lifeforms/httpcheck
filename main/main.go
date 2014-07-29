@@ -1,32 +1,22 @@
 package main
 
 import "fmt"
+import "io/ioutil"
 import "github.com/lifeforms/urlcheck/urlcheck"
 
 func main() {
-	manifest := urlcheck.Manifest{
-		urlcheck.Server{
-			Name: "tau",
-			Scenarios: []urlcheck.Tester{
-				urlcheck.Test{Url: "http://www.lifeforms.nl/nonexistent", Code: 404},
-				urlcheck.Scenario{
-					Name: "lifeforms",
-					Tests: urlcheck.Tests{
-						urlcheck.Test{Url: "http://www.lifeforms.nl/", Content: "DEHUMANIZE"},
-						urlcheck.Test{Url: "https://www.lifeforms.nl/", Content: "DEHUMANIZo"},
-					},
-				},
-				urlcheck.Scenario{
-					Name: "ionica",
-					Tests: urlcheck.Tests{
-						urlcheck.Test{Url: "http://ionica.nl/", Content: "Ionica Smeets"},
-					},
-				},
-			},
-		},
+	y, err := ioutil.ReadFile("urls.yaml")
+	if err != nil {
+		fmt.Println("Error reading:", err)
+		return
+	}
+	manifest, err := urlcheck.FromYAML(y)
+	if err != nil {
+		fmt.Println("Error parsing:", err)
+		return
 	}
 
-	err := manifest.Test()
+	err = manifest.Test()
 	if err != nil {
 		fmt.Println("Failures:", err)
 	} else {

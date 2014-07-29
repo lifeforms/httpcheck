@@ -2,10 +2,10 @@ package urlcheck
 
 import "errors"
 
-// A Server has a number of objects to test. These can be Tests or Scenarios.
+// A Server has a number of Scenarios to test.
 type Server struct {
-	Name      string
-	Scenarios []Tester
+	Name      string "server"
+	Scenarios []Scenario
 }
 
 // Test runs tests on the scenarios and tests for this server.

@@ -1,0 +1,7 @@
+- server: tau
+  scenarios:
+  - name: lifeforms
+    test: [{url: 'http://www.lifeforms.nl/', content: DEHUMANIZE}, {url: 'https://www.lifeforms.nl/',
+        content: DEHUMANIZE}]
+  - name: ionica
+    test: [{url: 'http://ionica.nl/', content: Ionica Smeets}]
