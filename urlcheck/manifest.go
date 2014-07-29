@@ -10,6 +10,10 @@ type Manifest []Server
 // It returns an error if one or more server has errors, or nil otherwise.
 // In case there are multiple errors, the error contains the concatenated messages.
 func (m Manifest) Test() error {
+	if len(m) == 0 {
+		return errors.New("Manifest is empty")
+	}
+
 	var allerrors []error
 	for _, server := range m {
 		err := server.Test()
