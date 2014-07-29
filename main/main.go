@@ -22,15 +22,9 @@ func parseArgs() (manifestfile string, timeout uint, verbose bool) {
 
 func readManifest(manifestfile string) (manifest urlcheck.Manifest, err error) {
 	y, err := ioutil.ReadFile(manifestfile)
-	if err != nil {
-		return nil, err
+	if err == nil {
+		manifest, err = urlcheck.FromYAML(y)
 	}
-
-	manifest, err = urlcheck.FromYAML(y)
-	if err != nil {
-		return nil, err
-	}
-
 	return
 }
 
