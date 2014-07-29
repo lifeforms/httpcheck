@@ -12,6 +12,7 @@ type Tester interface {
 }
 
 var Verbose = false
+var Version = "urlcheck/2.0"
 
 var client *http.Client
 
@@ -20,9 +21,17 @@ func init() {
 	options := cookiejar.Options{
 		PublicSuffixList: publicsuffix.List,
 	}
+
 	jar, err := cookiejar.New(&options)
 	if err != nil {
 		log.Fatal(err)
 	}
-	client = &http.Client{Jar: jar}
+
+	client = &http.Client{
+		Jar: jar,
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			req.Header.Add("User-Agent", Version)
+			return nil
+		},
+	}
 }
