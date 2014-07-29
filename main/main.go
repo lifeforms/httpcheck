@@ -1,9 +1,11 @@
 package main
 
-import "flag"
-import "fmt"
-import "io/ioutil"
-import "github.com/lifeforms/urlcheck/urlcheck"
+import (
+	"flag"
+	"fmt"
+	"github.com/lifeforms/urlcheck/urlcheck"
+	"io/ioutil"
+)
 
 func parseArgs() (manifestfile string, verbose bool) {
 	flagi := flag.String("i", "urls.yaml", "Input file with YAML manifest")
