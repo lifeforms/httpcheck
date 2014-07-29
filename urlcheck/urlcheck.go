@@ -11,6 +11,7 @@ type Tester interface {
 	Test() error
 }
 
+var Timeout uint = 5
 var Verbose = false
 var Version = "urlcheck/2.0"
 

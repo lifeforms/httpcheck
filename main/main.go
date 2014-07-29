@@ -8,12 +8,14 @@ import (
 	"os"
 )
 
-func parseArgs() (manifestfile string, verbose bool) {
+func parseArgs() (manifestfile string, timeout uint, verbose bool) {
 	flagi := flag.String("i", "urls.yaml", "Input file with YAML manifest")
+	flagt := flag.Uint("t", 5, "Timeout for each HTTP request in seconds, 0 for no timeout")
 	flagv := flag.Bool("v", false, "Verbose, prints the result of each test")
 	flag.Parse()
 
 	manifestfile = *flagi
+	timeout = *flagt
 	verbose = *flagv
 	return
 }
@@ -33,8 +35,9 @@ func readManifest(manifestfile string) (manifest urlcheck.Manifest, err error) {
 }
 
 func main() {
-	manifestfile, verbose := parseArgs()
+	manifestfile, timeout, verbose := parseArgs()
 
+	urlcheck.Timeout = timeout
 	urlcheck.Verbose = verbose
 	manifest, err := readManifest(manifestfile)
 	if err == nil {
