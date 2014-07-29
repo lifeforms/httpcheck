@@ -1,7 +1,9 @@
 package urlcheck
 
-import "errors"
-import "strconv"
+import (
+	"errors"
+	"strconv"
+)
 
 type Tests []Test
 

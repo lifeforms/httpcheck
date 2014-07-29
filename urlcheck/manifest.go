@@ -1,7 +1,9 @@
 package urlcheck
 
-import "errors"
-import "gopkg.in/yaml.v1"
+import (
+	"errors"
+	"gopkg.in/yaml.v1"
+)
 
 // Manifest contains one or more Servers, each having some Scenarios.
 type Manifest []Server
