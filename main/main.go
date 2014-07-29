@@ -10,8 +10,8 @@ func parseArgs() (manifestfile string, verbose bool) {
 	flagv := flag.Bool("v", false, "Verbose, prints the result of each test")
 	flag.Parse()
 
-	verbose = *flagv
 	manifestfile = *flagi
+	verbose = *flagv
 	return
 }
 
