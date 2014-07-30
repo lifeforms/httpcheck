@@ -13,7 +13,7 @@ Just install the library for use in Go code: `go get github.com/lifeforms/httpch
 
 The `httpcheck` library and tool operate on a *manifest*. The manifest contains a list of servers and test scenarios. It can be described as a YAML file, or it can be instantiated from Go code.
 
-Each *server* has one or more *scenarios*. A scenario describes a list of *test* requests, which are executed in order. For example, a scenario could consist of the following tests: (1) getting a website's home page, (2) doing a search query, (3) doing a query with an incorrect parameter, et cetera. If one of the tests in a scenario fails, the scenario is abandoned. It is valid for a scenario to contain just one test.
+Each *server* has one or more *scenarios*. A scenario describes a list of *test* requests, which are executed in order. For example, a scenario could consist of the following tests: (1) getting a website's home page, (2) doing a search query, (3) doing a query with an incorrect parameter, et cetera. If one of the tests in a scenario fails, the scenario is abandoned. It is valid for a scenario to contain just one test. A scenario can have a name, which is displayed in error output, but this is not necessary.
 
 Scenarios are grouped under a server, because `httpcheck` will test different servers concurrently. This prevents a single server or application from being swamped with test traffic. The server name is only used for administrative purposes.
 
