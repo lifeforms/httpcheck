@@ -5,7 +5,7 @@ Simple HTTP website monitoring library and tool in Go. It retrieves a set of spe
 
 ## Installation
 
-Install the tool: `go get github.com/lifeforms/httpcheck/cmd/httpcheck`
+Install the command-line tool: `go get github.com/lifeforms/httpcheck/cmd/httpcheck`
 
 Just install the library for use in Go code: `go get github.com/lifeforms/httpcheck/httpcheck`
 
