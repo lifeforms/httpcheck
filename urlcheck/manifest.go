@@ -34,10 +34,10 @@ func (m Manifest) Test() error {
 	for _, c := range testresults {
 		err := <-c
 		if err != nil {
-			errorstr += err.Error()
 			if errorcount > 0 {
 				errorstr += "\n"
 			}
+			errorstr += err.Error()
 			errorcount++
 		}
 	}
