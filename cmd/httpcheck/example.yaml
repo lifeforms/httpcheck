@@ -1,0 +1,25 @@
+# A server with various simple URLs to check.
+# If code is not supplied, status code 200 is expected.
+
+- server: lifeforms
+  scenarios:
+  - test: [{url: 'http://lifeforms.nl/', content: 'Lifeforms'}] # follows redirect to HTTPS
+  - test: [{url: 'https://lifeforms.nl/', content: 'Lifeforms'}]
+  - test: [{url: 'https://lifeforms.nl/gfx', code: 403}]
+  - test: [{url: 'https://lifeforms.nl/nonexistent', code: 404}]
+
+# Servers with each one scenario consisting of a user doing a search.
+# If one step in a scenario fails, that scenario is abandoned.
+# Cookies are retained, so scenario steps can depend on earlier steps.
+
+- server: google
+  scenarios:
+  - name: search
+    test: [{url: 'https://google.com/', content: '<title>Google</title>'},
+           {url: 'https://google.com/search?q=test', content: 'test - Google Search'}]
+
+- server: bing
+  scenarios:
+  - name: search
+    test: [{url: 'https://bing.com/', content: '<title>Bing</title>'},
+           {url: 'https://bing.com/search?q=test', content: '<title>test - Bing</title>'}]
