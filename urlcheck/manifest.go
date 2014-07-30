@@ -16,25 +16,37 @@ func (m Manifest) Test() error {
 		return errors.New("Manifest is empty")
 	}
 
-	var allerrors []error
+	// Start goroutine for every server.Test() call
+	// The result of server.Test() is an error or nil. This is passed through a channel.
+	var channels []chan error
 	for _, server := range m {
-		err := server.Test()
+		c := make(chan error)
+		channels = append(channels, c)
+		go func(server Server) {
+			c <- server.Test()
+		}(server)
+	}
+
+	// Read from every channel to collect all errors returned.
+	// This blocks until every channel has something to receive so all tests are done.
+	errorcount := 0
+	errorstr := ""
+	for _, c := range channels {
+		err := <-c
 		if err != nil {
-			allerrors = append(allerrors, err)
+			errorstr += err.Error()
+			if errorcount > 0 {
+				errorstr += "\n"
+			}
+			errorcount++
 		}
 	}
 
-	if len(allerrors) > 0 {
-		errorstr := ""
-		for i, err := range allerrors {
-			if i > 0 {
-				errorstr += "\n"
-			}
-			errorstr += err.Error()
-		}
+	if errorcount > 0 {
 		return errors.New(errorstr)
+	} else {
+		return nil
 	}
-	return nil
 }
 
 func FromYAML(y []byte) (Manifest, error) {
