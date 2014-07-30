@@ -11,9 +11,9 @@ type Tester interface {
 	Test() error
 }
 
-var RequestTimeout uint = 5
-var ServerTimeout uint = 120
-var Verbose = false
+var RequestTimeout uint = 5  // Timeout for each HTTP request (seconds)
+var ServerTimeout uint = 120 // Timeout for a server's tests (seconds)
+var Verbose = false          // If true, every request is printed to standard output
 
 var client http.Client
 var version = "httpcheck/2.0"
