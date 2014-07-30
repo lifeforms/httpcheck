@@ -62,7 +62,7 @@ func (t Test) DoRequest() (code int, body string, err error) {
 		req.Header.Add(k, v)
 	}
 
-	client.Timeout = time.Duration(int(Timeout)) * time.Second
+	client.Timeout = time.Duration(int(RequestTimeout)) * time.Second
 	resp, err := client.Do(req)
 	if err != nil {
 		return 0, "", err

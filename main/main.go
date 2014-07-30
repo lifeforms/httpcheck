@@ -50,7 +50,7 @@ func filterManifest(in urlcheck.Manifest, server string) (out urlcheck.Manifest,
 func main() {
 	manifestfile, server, timeout, verbose := parseArgs()
 
-	urlcheck.Timeout = timeout
+	urlcheck.RequestTimeout = timeout
 	urlcheck.Verbose = verbose
 	manifest, err := readManifest(manifestfile)
 

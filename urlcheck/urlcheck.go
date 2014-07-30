@@ -11,7 +11,7 @@ type Tester interface {
 	Test() error
 }
 
-var Timeout uint = 5
+var RequestTimeout uint = 5
 var Verbose = false
 
 var client http.Client
