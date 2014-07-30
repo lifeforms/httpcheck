@@ -9,16 +9,18 @@ import (
 	"os"
 )
 
-func parseArgs() (manifestfile string, server string, timeout uint, verbose bool) {
+func parseArgs() (manifestfile string, server string, rt uint, st uint, verbose bool) {
 	flagi := flag.String("i", "manifest.yaml", "Input file with YAML manifest")
 	flags := flag.String("s", "", "Only check this server, default check all servers in manifest")
-	flagt := flag.Uint("t", 5, "Timeout for each HTTP request in seconds, 0 for no timeout")
+	flagr := flag.Uint("r", 5, "Timeout for each HTTP request in seconds, 0 for no timeout")
+	flagt := flag.Uint("t", 120, "Timeout for each server in seconds, 0 for no timeout")
 	flagv := flag.Bool("v", false, "Verbose, prints the result of each test")
 	flag.Parse()
 
 	manifestfile = *flagi
 	server = *flags
-	timeout = *flagt
+	rt = *flagr
+	st = *flagt
 	verbose = *flagv
 	return
 }
@@ -48,9 +50,10 @@ func filterManifest(in urlcheck.Manifest, server string) (out urlcheck.Manifest,
 }
 
 func main() {
-	manifestfile, server, timeout, verbose := parseArgs()
+	manifestfile, server, rt, st, verbose := parseArgs()
 
-	urlcheck.RequestTimeout = timeout
+	urlcheck.RequestTimeout = rt
+	urlcheck.ServerTimeout = st
 	urlcheck.Verbose = verbose
 	manifest, err := readManifest(manifestfile)
 
