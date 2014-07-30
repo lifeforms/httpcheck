@@ -18,10 +18,10 @@ func (m Manifest) Test() error {
 
 	// Start goroutine for every server.Test() call
 	// The result of server.Test() is an error or nil. This is passed through a channel.
-	var channels []chan error
+	var testresults []chan error
 	for _, server := range m {
 		c := make(chan error)
-		channels = append(channels, c)
+		testresults = append(testresults, c)
 		go func(server Server) {
 			c <- server.Test()
 		}(server)
@@ -31,7 +31,7 @@ func (m Manifest) Test() error {
 	// This blocks until every channel has something to receive so all tests are done.
 	errorcount := 0
 	errorstr := ""
-	for _, c := range channels {
+	for _, c := range testresults {
 		err := <-c
 		if err != nil {
 			errorstr += err.Error()
