@@ -3,10 +3,10 @@
 
 - server: lifeforms
   scenarios:
-  - test: [{url: 'http://lifeforms.nl/', content: 'Lifeforms'}] # follows redirect to HTTPS
-  - test: [{url: 'https://lifeforms.nl/', content: 'Lifeforms'}]
-  - test: [{url: 'https://lifeforms.nl/gfx', code: 403}]
-  - test: [{url: 'https://lifeforms.nl/nonexistent', code: 404}]
+  - test: [{name: http, url: 'http://lifeforms.nl/', content: 'Lifeforms'}] # follows redirect to HTTPS
+  - test: [{name: https, url: 'https://lifeforms.nl/', content: 'Lifeforms'}]
+  - test: [{name: opendir, url: 'https://lifeforms.nl/gfx', code: 403}]
+  - test: [{name: nonexistent, url: 'https://lifeforms.nl/nonexistent', code: 404}]
 
 # Servers with each one scenario consisting of a user doing a search.
 # If one step in a scenario fails, that scenario is abandoned.
