@@ -20,11 +20,6 @@ func (server Server) Test() error {
 
 	var allerrors []error
 	for _, scenario := range server.Scenarios {
-		err := scenario.Test()
-		if err != nil {
-			allerrors = append(allerrors, err)
-		}
-
 		// Stop testing if more time was spent than ServerTimeout
 		if ServerTimeout > 0 {
 			if time.Since(start) > time.Duration(ServerTimeout)*time.Second {
@@ -32,6 +27,11 @@ func (server Server) Test() error {
 					errors.New("Tests took longer than server timeout ("+strconv.Itoa(int(ServerTimeout))+" sec)"))
 				break
 			}
+		}
+
+		err := scenario.Test()
+		if err != nil {
+			allerrors = append(allerrors, err)
 		}
 	}
 
