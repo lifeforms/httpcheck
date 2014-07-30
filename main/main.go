@@ -4,7 +4,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/lifeforms/urlcheck/urlcheck"
+	"github.com/lifeforms/httpcheck/httpcheck"
 	"io/ioutil"
 	"os"
 )
@@ -25,15 +25,15 @@ func parseArgs() (manifestfile string, server string, rt uint, st uint, verbose 
 	return
 }
 
-func readManifest(manifestfile string) (manifest urlcheck.Manifest, err error) {
+func readManifest(manifestfile string) (manifest httpcheck.Manifest, err error) {
 	y, err := ioutil.ReadFile(manifestfile)
 	if err == nil {
-		manifest, err = urlcheck.FromYAML(y)
+		manifest, err = httpcheck.FromYAML(y)
 	}
 	return
 }
 
-func filterManifest(in urlcheck.Manifest, server string) (out urlcheck.Manifest, err error) {
+func filterManifest(in httpcheck.Manifest, server string) (out httpcheck.Manifest, err error) {
 	if server == "" {
 		return in, nil
 	}
@@ -52,9 +52,9 @@ func filterManifest(in urlcheck.Manifest, server string) (out urlcheck.Manifest,
 func main() {
 	manifestfile, server, rt, st, verbose := parseArgs()
 
-	urlcheck.RequestTimeout = rt
-	urlcheck.ServerTimeout = st
-	urlcheck.Verbose = verbose
+	httpcheck.RequestTimeout = rt
+	httpcheck.ServerTimeout = st
+	httpcheck.Verbose = verbose
 	manifest, err := readManifest(manifestfile)
 
 	if err == nil {

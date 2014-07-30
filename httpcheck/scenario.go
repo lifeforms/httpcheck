@@ -1,4 +1,4 @@
-package urlcheck
+package httpcheck
 
 import (
 	"errors"

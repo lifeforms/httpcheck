@@ -1,4 +1,4 @@
-package urlcheck
+package httpcheck
 
 import (
 	"code.google.com/p/go.net/publicsuffix"
@@ -16,7 +16,7 @@ var ServerTimeout uint = 120
 var Verbose = false
 
 var client http.Client
-var version = "urlcheck/2.0"
+var version = "httpcheck/2.0"
 
 // Set up a HTTP client with a cookie jar
 func init() {
