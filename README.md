@@ -1,21 +1,21 @@
 httpcheck
 =========
 
-Simple HTTP website monitoring library and tool in Go
+Simple HTTP website monitoring library and tool in Go. It retrieves a set of specified HTTP URLs, and compares the response codes/bodies with the specification. It checks servers in parallel and understands cookies.
 
 ## Installation
 
 Install the tool: `go get github.com/lifeforms/httpcheck/cmd/httpcheck`
 
-Just install the library: `go get github.com/lifeforms/httpcheck/httpcheck`
+Just install the library for use in Go code: `go get github.com/lifeforms/httpcheck/httpcheck`
 
 ## Concepts
 
-The `httpcheck` library and tool operate on a *manifest*. The manifest contains a list of servers and test scenarios. It can be described as a YAML file, or it can be instantiated from Go source code.
+The `httpcheck` library and tool operate on a *manifest*. The manifest contains a list of servers and test scenarios. It can be described as a YAML file, or it can be instantiated from Go code.
 
-Each *server* has one or more *scenarios*. A scenario describes a list of *test* requests, which are executed in order. For example, a scenario could consist of the following tests: (1) getting a website's home page, (2) doing a search query, (3) doing a query with an incorrect parameter, et cetera. It's valid for a scenario to contain just one test. If one of the tests in a scenario fails, the scenario is abandoned.
+Each *server* has one or more *scenarios*. A scenario describes a list of *test* requests, which are executed in order. For example, a scenario could consist of the following tests: (1) getting a website's home page, (2) doing a search query, (3) doing a query with an incorrect parameter, et cetera. If one of the tests in a scenario fails, the scenario is abandoned. It is valid for a scenario to contain just one test.
 
-Scenarios are stored under a server, because `httpcheck` will test different servers concurrently. This prevents a single server from being swamped with test traffic. The server name is only used for administrative purposes.
+Scenarios are grouped under a server, because `httpcheck` will test different servers concurrently. This prevents a single server or application from being swamped with test traffic. The server name is only used for administrative purposes.
 
 ## Manifest
 
