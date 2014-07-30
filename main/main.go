@@ -63,7 +63,8 @@ func main() {
 	}
 
 	if err != nil {
-		fmt.Println("Failures:", err)
+		fmt.Println("Failures:")
+		fmt.Println(err)
 		os.Exit(1)
 	} else {
 		if verbose {
