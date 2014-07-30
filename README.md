@@ -78,7 +78,7 @@ A simple use of the library from Go:
 
     	manifest := httpcheck.Manifest{
     		httpcheck.Server{
-    			Name: "tau",
+    			Name: "lifeforms",
     			Scenarios: []httpcheck.Scenario{
     				httpcheck.Scenario{
     					Name:  "http",
