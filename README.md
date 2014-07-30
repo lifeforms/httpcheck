@@ -1,7 +1,7 @@
 httpcheck
 =========
 
-Simple HTTP website monitoring library and tool in Go. It retrieves a set of specified HTTP URLs, and compares the response codes/bodies with the specification. It checks servers in parallel and understands cookies.
+Simple HTTP website monitoring library and tool in Go. It retrieves a set of specified HTTP URLs and compares the response codes/bodies with the specification. It checks servers in parallel and understands cookies.
 
 ## Installation
 
