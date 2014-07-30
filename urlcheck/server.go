@@ -1,6 +1,10 @@
 package urlcheck
 
-import "errors"
+import (
+	"errors"
+	"strconv"
+	"time"
+)
 
 // A Server has a number of Scenarios to test.
 type Server struct {
@@ -12,11 +16,22 @@ type Server struct {
 // It returns an error if one or more scenarios/tests has errors, or nil otherwise.
 // In case there are multiple errors, the error contains the concatenated messages.
 func (server Server) Test() error {
+	start := time.Now()
+
 	var allerrors []error
 	for _, scenario := range server.Scenarios {
 		err := scenario.Test()
 		if err != nil {
 			allerrors = append(allerrors, err)
+		}
+
+		// Stop testing if more time was spent than ServerTimeout
+		if ServerTimeout > 0 {
+			if time.Since(start) > time.Duration(ServerTimeout)*time.Second {
+				allerrors = append(allerrors,
+					errors.New("Tests took longer than server timeout ("+strconv.Itoa(int(ServerTimeout))+" sec)"))
+				break
+			}
 		}
 	}
 

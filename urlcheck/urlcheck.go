@@ -12,6 +12,7 @@ type Tester interface {
 }
 
 var RequestTimeout uint = 5
+var ServerTimeout uint = 120
 var Verbose = false
 
 var client http.Client
