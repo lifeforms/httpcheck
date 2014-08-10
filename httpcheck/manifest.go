@@ -21,6 +21,7 @@ func (m Manifest) Test() error {
 	var testresults []chan error
 	for _, server := range m {
 		c := make(chan error)
+		defer close(c)
 		testresults = append(testresults, c)
 		go func(server Server) {
 			c <- server.Test()
