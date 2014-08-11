@@ -58,6 +58,9 @@ func (t Test) DoRequest() (code int, body string, err error) {
 	}
 
 	req.Header.Add("User-Agent", version)
+	if t.Method == POST {
+		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	}
 	for k, v := range t.Headers {
 		req.Header.Add(k, v)
 	}
