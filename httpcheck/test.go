@@ -42,7 +42,7 @@ func (t Test) Test() (err error) {
 	// Log an error
 	if Verbose {
 		if err == nil {
-			fmt.Println(t.String() + ": OK")
+			fmt.Println(t.String() + " OK")
 		} else {
 			fmt.Println(err)
 		}
@@ -114,7 +114,7 @@ func (t Test) CheckContent(body string) error {
 }
 
 func (t Test) NewError(message string) error {
-	return errors.New(t.String() + ": " + message)
+	return errors.New(t.String() + " FAIL: " + message)
 }
 
 func (t Test) String() string {
