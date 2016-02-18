@@ -57,6 +57,7 @@ func main() {
 	httpcheck.RequestTimeout = rt
 	httpcheck.ServerTimeout = st
 	httpcheck.Verbose = verbose
+
 	manifest, err := readManifest(manifestfile)
 
 	if err == nil {
