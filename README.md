@@ -51,13 +51,21 @@ The `url` field specifies the HTTP URL to call. If `content` is supplied, we che
 
 It's optional to supply a `method` of GET (default) or POST. If `data` contains a string, it is sent as POST data. In `headers`, HTTP header name/value pairs can be specified.
 
+You can use relative URLs in the manifest, for example `/` instead of `http://example.com/`. In that case, you must specify a base URL when running the tests. This single base URL will be applied to all tests containing a relative URL.
+
 ## Usage
 
-To check a manifest: `httpcheck -i example.yaml` If all test scenarios succeed, no output will be printed. If there are failures, the failure will be printed, and the command will exit with an error status.
+To run all HTTP tests in the file `manifest.yaml`, just run the command without arguments: `httpcheck`
 
-To print the result of each individual test, use the verbose flag: `httpcheck -i example.yaml -v`
+To use another manifest: `httpcheck -i example.yaml`
 
-There are default timeouts per request (maximum time taken for the response to arrive and be read) and per server (maximum time for all tests). These prevent downed infrastructure from keeping the check program waiting forever. See `httpcheck -h` to view advanced options.
+If some of your tests use relative URLs, specify a base URL with: `-u http://example.com/`
+
+If all test scenarios succeed, no output will be printed. If there are failures, the failure will be printed, and the command will exit with an error status.
+
+To print the result of each individual test, use the verbose flag: `-v`
+
+There is a timeout per request (maximum time taken for the response to arrive and be read) and per server (maximum time spent on all tests). These prevent downed infrastructure from keeping the check program waiting forever. See `httpcheck -h` to view these options and their defaults.
 
 ## Library example
 
