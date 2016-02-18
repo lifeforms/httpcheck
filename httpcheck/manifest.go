@@ -16,7 +16,16 @@ func (m *Manifest) SetBaseURL(baseurl string) {
 			for k := range (*m)[i].Scenarios[j].Tests {
 				match := scheme.MatchString((*m)[i].Scenarios[j].Tests[k].Url)
 				if !match {
-					url := baseurl + (*m)[i].Scenarios[j].Tests[k].Url
+					//	This is a relative URL, prefix it with baseurl.
+					//	When glueing the URLs together, remove a double '/' to make prettier URLs.
+					//	To have a test that starts with '//', add it to the test URL explicitly.
+					var url string
+					if baseurl[len(baseurl)-1] == '/' && len((*m)[i].Scenarios[j].Tests[k].Url) > 0 &&
+						(*m)[i].Scenarios[j].Tests[k].Url[0] == '/' {
+						url = baseurl[0:len(baseurl)-1] + (*m)[i].Scenarios[j].Tests[k].Url
+					} else {
+						url = baseurl + (*m)[i].Scenarios[j].Tests[k].Url
+					}
 					(*m)[i].Scenarios[j].Tests[k].Url = url
 				}
 			}
