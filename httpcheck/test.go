@@ -31,7 +31,13 @@ type Test struct {
 
 // Test makes a HTTP call and checks the response
 func (t Test) Test() (err error) {
-	code, body, err := t.DoRequest()
+	err = t.Validate()
+
+	var code int
+	var body string
+	if err == nil {
+		code, body, err = t.DoRequest()
+	}
 	if err == nil {
 		err = t.CheckCode(code)
 	}
@@ -48,6 +54,14 @@ func (t Test) Test() (err error) {
 		}
 	}
 	return
+}
+
+func (t Test) Validate() error {
+	scheme := regexp.MustCompile("^https?:")
+	if !scheme.MatchString(t.Url) {
+		return errors.New("URL is not absolute, must specify a base URL (-u): " + t.Url)
+	}
+	return nil
 }
 
 // DoRequest uses the global http object to send a HTTP request
