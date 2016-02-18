@@ -3,10 +3,26 @@ package httpcheck
 import (
 	"errors"
 	"gopkg.in/yaml.v1"
+	"regexp"
 )
 
 // Manifest contains one or more Servers, each having some Scenarios.
 type Manifest []Server
+
+func (m *Manifest) SetBaseURL(baseurl string) {
+	scheme := regexp.MustCompile("^https?:")
+	for i := range *m {
+		for j := range (*m)[i].Scenarios {
+			for k := range (*m)[i].Scenarios[j].Tests {
+				match := scheme.MatchString((*m)[i].Scenarios[j].Tests[k].Url)
+				if !match {
+					url := baseurl + (*m)[i].Scenarios[j].Tests[k].Url
+					(*m)[i].Scenarios[j].Tests[k].Url = url
+				}
+			}
+		}
+	}
+}
 
 // Test runs tests on all servers in the manifest.
 // It returns an error if one or more server has errors, or nil otherwise.
