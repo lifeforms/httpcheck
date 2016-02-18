@@ -9,6 +9,7 @@ import (
 // Manifest contains one or more Servers, each having some Scenarios.
 type Manifest []Server
 
+// SetBaseURL walks through all tests and prefixes any relative URLs (e.g. '/') with a base URL.
 func (m *Manifest) SetBaseURL(baseurl string) {
 	scheme := regexp.MustCompile("^https?:")
 	for i := range *m {
@@ -75,6 +76,7 @@ func (m Manifest) Test() error {
 	}
 }
 
+// FromYAML parses YAML input and returns a manifest.
 func FromYAML(y []byte) (Manifest, error) {
 	var manifest Manifest
 	err := yaml.Unmarshal(y, &manifest)
