@@ -53,6 +53,10 @@ It's optional to supply a `method` of `'GET'` (default), `'POST'`, or any other 
 
 You can use relative URLs in the manifest, for example `/` instead of `http://example.com/`. In that case, you must specify a base URL when running the tests. This single base URL will be applied to all tests containing a relative URL.
 
+A test example with a relative URL, POST data and a custom header:
+
+    {url: '/', method: 'POST', data: 'foo=bar', headers: {'Cookie': 'baz=qux'}}
+
 ## Usage
 
 To run all HTTP tests in the file `manifest.yaml`, just run the command without arguments: `httpcheck`
