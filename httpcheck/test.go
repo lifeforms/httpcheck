@@ -19,6 +19,7 @@ type Test struct {
 	Content       string            ",omitempty" // Expected content as a regexp, e.g. "Hello World"
 	Code          int               ",omitempty" // Expected HTTP response code
 	Method        string            ",omitempty" // HTTP method, i.e. "GET" (default) or "POST"
+	Type          string            ",omitempty" // Optional value for Content-Type header
 	Data          string            ",omitempty" // Optional post data
 	Headers       map[string]string ",omitempty" // Optional headers to add to the request
 	SkipSSLVerify bool              ",omitempty" // If true, SSL server verification is skipped
@@ -67,9 +68,11 @@ func (t Test) DoRequest() (code int, body string, err error) {
 	}
 
 	req.Header.Add("User-Agent", version)
-	if t.Method == "POST" {
-		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+	if t.ContentType() != "" {
+		req.Header.Add("Content-Type", t.ContentType())
 	}
+
 	for k, v := range t.Headers {
 		req.Header.Add(k, v)
 	}
@@ -135,4 +138,14 @@ func (t Test) MethodName() string {
 		return "GET"
 	}
 	return t.Method
+}
+
+func (t Test) ContentType() string {
+	if t.Type != "" {
+		return t.Type
+	}
+	if t.Method == "POST" {
+		return "application/x-www-form-urlencoded"
+	}
+	return ""
 }
