@@ -51,11 +51,14 @@ The `url` field specifies the HTTP URL to call. If `content` is supplied, we che
 
 It's optional to supply a `method` of `'GET'` (default), `'POST'`, or any other method. If `data` contains a string, it is sent as raw POST data. In `headers`, HTTP header name/value pairs can be specified.
 
+For brevity, you can set a `type` attribute to send a custom Content-Type header. By default, this is empty. However, for a POST request, `application/x-www-form-urlencoded` is assumed unless you set this header explicitly.
+
 You can use relative URLs in the manifest, for example `/` instead of `http://example.com/`. In that case, you must specify a base URL when running the tests. This single base URL will be applied to all tests containing a relative URL.
 
-A test example with a relative URL, POST data and a custom header:
+Some test examples with a relative URL, POST data and custom headers:
 
-    {url: '/', method: 'POST', data: 'foo=bar', headers: {'Cookie': 'baz=qux'}}
+    {url: '/api', method: 'POST', data: 'foo=bar', headers: {'Cookie': 'baz=qux'}}
+    {url: '/xmlapi', method: 'POST', data: '<foo></foo>', type: 'text/xml'}
 
 ## Usage
 
