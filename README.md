@@ -53,9 +53,9 @@ This is an example manifest in YAML format, found in the repository as `example.
 
 The `url` field is the only mandatory field; it should contain one HTTP or HTTPS URL to test. You can use relative URLs in the manifest, for example `/` instead of `http://example.com/`. In that case, you must specify a base URL when running the tests. This single base URL will be applied to all tests containing a relative URL.
 
-The expected response from the web server must be specified using the `code` and `content` attributes. If `content` is supplied, we check the response body for the regular expression. If `code` is supplied, we expect that HTTP status code; if it's omitted we expect code 200. If the server sends a redirect, the redirect will be followed, and the final location's response code is tested.
+The expected response from the web server must be specified using the `code` and `content` attributes. If `content` is supplied, we check the response body for the regular expression. If `code` is supplied, we expect that HTTP status code; if it's omitted we expect code 200. If the server sends a redirect, the redirect will be followed, and the final location's response code is tested instead.
 
-If you want to match on multiple lines of output in one test, use a multiline regexp by starting `content` with `(?s)`. This is useful to test if a complex page is complete but you don't want to completely list it in the test. Example:
+If you want to match on multiple lines of output in one test, use a multiline regexp by starting `content` with `(?s)`. This is useful to test if a web page is complete but you don't want to specify the full output in the test. Example:
 
     {url: '/page', content: '(?s)Page Title.*</html>'}
 
