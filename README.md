@@ -47,18 +47,19 @@ This is an example manifest in YAML format, found in the repository as `example.
         test: [{url: 'https://bing.com/', content: '<title>Bing</title>'},
                {url: 'https://bing.com/search?q=test', content: '<title>test - Bing</title>'}]
 
-The `url` field specifies the HTTP URL to call. If `content` is supplied, we check the response body for the regular expression. If `code` is supplied, we expect that HTTP status code; if not, we expect code 200.
+The `url` field is the only mandatory field; it should contain one HTTP or HTTPS URL to test. You can use relative URLs in the manifest, for example `/` instead of `http://example.com/`. In that case, you must specify a base URL when running the tests. This single base URL will be applied to all tests containing a relative URL.
+
+The expected response from the web server must be specified using the `code` and `content` attributes. If `content` is supplied, we check the response body for the regular expression. If `code` is supplied, we expect that HTTP status code; if it's omitted we expect code 200. If the server sends a redirect, the redirect will be followed, and the final location's response code is tested.
 
 It's optional to supply a `method` of `'GET'` (default), `'POST'`, or any other method. If `data` contains a string, it is sent as raw POST data. In `headers`, HTTP header name/value pairs can be specified.
 
-For brevity, you can set a `type` attribute to send a custom Content-Type header. By default, this is empty. However, for a POST request, `application/x-www-form-urlencoded` is assumed unless you set this header explicitly.
-
-You can use relative URLs in the manifest, for example `/` instead of `http://example.com/`. In that case, you must specify a base URL when running the tests. This single base URL will be applied to all tests containing a relative URL.
+For brevity, you can set a `type` attribute to send a custom Content-Type header. For a POST request, `application/x-www-form-urlencoded` is assumed unless you set this header explicitly.
 
 Some test examples with a relative URL, POST data and custom headers:
 
-    {url: '/api', method: 'POST', data: 'foo=bar', headers: {'Cookie': 'baz=qux'}}
-    {url: '/xmlapi', method: 'POST', data: '<foo></foo>', type: 'text/xml'}
+    {url: '/api', method: 'POST', data: 'foo=bar'}
+    {url: '/api', method: 'POST', data: '<foo></foo>', type: 'text/xml'}
+    {url: '/api', headers: {'Cookie': 'baz=qux'}}
 
 ## Usage
 
