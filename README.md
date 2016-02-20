@@ -49,7 +49,7 @@ This is an example manifest in YAML format, found in the repository as `example.
 
 The `url` field specifies the HTTP URL to call. If `content` is supplied, we check the response body for the regular expression. If `code` is supplied, we expect that HTTP status code; if not, we expect code 200.
 
-It's optional to supply a `method` of GET (default) or POST. If `data` contains a string, it is sent as POST data. In `headers`, HTTP header name/value pairs can be specified.
+It's optional to supply a `method` of `'GET'` (default), `'POST'`, or any other method. If `data` contains a string, it is sent as raw POST data. In `headers`, HTTP header name/value pairs can be specified.
 
 You can use relative URLs in the manifest, for example `/` instead of `http://example.com/`. In that case, you must specify a base URL when running the tests. This single base URL will be applied to all tests containing a relative URL.
 
