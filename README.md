@@ -19,6 +19,8 @@ Scenarios are grouped under a server, because `httpcheck` will test different se
 
 ## Manifest
 
+### Example
+
 This is an example manifest in YAML format, found in the repository as `example.yaml`:
 
     # A server with various simple URLs to check.
@@ -47,6 +49,8 @@ This is an example manifest in YAML format, found in the repository as `example.
         test: [{url: 'https://bing.com/', content: '<title>Bing</title>'},
                {url: 'https://bing.com/search?q=test', content: '<title>test - Bing</title>'}]
 
+### Fields
+
 The `url` field is the only mandatory field; it should contain one HTTP or HTTPS URL to test. You can use relative URLs in the manifest, for example `/` instead of `http://example.com/`. In that case, you must specify a base URL when running the tests. This single base URL will be applied to all tests containing a relative URL.
 
 The expected response from the web server must be specified using the `code` and `content` attributes. If `content` is supplied, we check the response body for the regular expression. If `code` is supplied, we expect that HTTP status code; if it's omitted we expect code 200. If the server sends a redirect, the redirect will be followed, and the final location's response code is tested.
@@ -55,7 +59,9 @@ If you want to match on multiple lines of output in one test, use a multiline re
 
     {url: '/page', content: '(?s)Page Title.*</html>'}
 
-It's optional to supply a `method` of `'GET'` (default), `'POST'`, or any other method. If `data` contains a string, it is sent as raw POST data. In `headers`, HTTP header name/value pairs can be specified.
+It's optional to supply a `method` of `'GET'` (default), `'POST'`, or any other method. If `data` contains a string, it is sent as raw POST data, which means that you must url-encode the contents yourself if necessary.
+
+In `headers`, you can specify HTTP header name/value pairs to send to the server. Use this to send cookies, authentication, Accept headers, et cetera.
 
 For brevity, you can set a `type` attribute to send a custom Content-Type header. For a POST request, `application/x-www-form-urlencoded` is assumed unless you set this header explicitly.
 
