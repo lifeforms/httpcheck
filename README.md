@@ -41,7 +41,7 @@ This is an example manifest in YAML format, found in the repository as `example.
       scenarios:
       - name: search
         test: [{url: 'https://google.com/', content: '<title>Google</title>'},
-               {url: 'https://google.com/search?q=test', content: 'test - Google Search'}]
+               {url: 'https://google.com/search?q=test', content: 'test - Google'}]
 
     - server: bing
       scenarios:
