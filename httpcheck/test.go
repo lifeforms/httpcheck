@@ -53,6 +53,10 @@ func (t Test) Test() (err error) {
 }
 
 func (t Test) Validate() error {
+	if t.MethodName() == "GET" && t.Data != "" {
+		return errors.New("Test method is GET, 'data' field is not allowed: " + t.Url)
+	}
+
 	scheme := regexp.MustCompile("^https?:")
 	if !scheme.MatchString(t.Url) {
 		return errors.New("URL is not absolute, must specify a base URL (-u): " + t.Url)
