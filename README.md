@@ -51,6 +51,10 @@ The `url` field is the only mandatory field; it should contain one HTTP or HTTPS
 
 The expected response from the web server must be specified using the `code` and `content` attributes. If `content` is supplied, we check the response body for the regular expression. If `code` is supplied, we expect that HTTP status code; if it's omitted we expect code 200. If the server sends a redirect, the redirect will be followed, and the final location's response code is tested.
 
+If you want to match on multiple lines of output in one test, use a multiline regexp by starting `content` with `(?s)`. This is useful to test if a complex page is complete but you don't want to completely list it in the test. Example:
+
+    {url: '/page', content: '(?s)Page Title.*</html>'}
+
 It's optional to supply a `method` of `'GET'` (default), `'POST'`, or any other method. If `data` contains a string, it is sent as raw POST data. In `headers`, HTTP header name/value pairs can be specified.
 
 For brevity, you can set a `type` attribute to send a custom Content-Type header. For a POST request, `application/x-www-form-urlencoded` is assumed unless you set this header explicitly.
