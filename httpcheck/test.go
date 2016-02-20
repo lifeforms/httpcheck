@@ -13,17 +13,12 @@ import (
 
 type Method int
 
-const (
-	GET Method = iota
-	POST
-)
-
 // A single HTTP action, with the expected results.
 type Test struct {
 	Url           string            // A fully specified URL including the protocol
 	Content       string            ",omitempty" // Expected content as a regexp, e.g. "Hello World"
 	Code          int               ",omitempty" // Expected HTTP response code
-	Method        Method            ",omitempty" // HTTP method, i.e. GET (default) or POST
+	Method        string            ",omitempty" // HTTP method, i.e. "GET" (default) or "POST"
 	Data          string            ",omitempty" // Optional post data
 	Headers       map[string]string ",omitempty" // Optional headers to add to the request
 	SkipSSLVerify bool              ",omitempty" // If true, SSL server verification is skipped
@@ -72,7 +67,7 @@ func (t Test) DoRequest() (code int, body string, err error) {
 	}
 
 	req.Header.Add("User-Agent", version)
-	if t.Method == POST {
+	if t.Method == "POST" {
 		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	}
 	for k, v := range t.Headers {
@@ -136,12 +131,8 @@ func (t Test) String() string {
 }
 
 func (t Test) MethodName() string {
-	switch t.Method {
-	case GET:
+	if t.Method == "" {
 		return "GET"
-	case POST:
-		return "POST"
-	default:
-		return ""
 	}
+	return t.Method
 }
