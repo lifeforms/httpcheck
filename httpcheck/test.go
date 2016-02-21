@@ -57,8 +57,14 @@ func (t Test) Validate() error {
 		return errors.New("Test is missing an URL")
 	}
 
-	if t.MethodName() == "GET" && t.Data != "" {
-		return errors.New("Test method is GET, 'data' field is not allowed: " + t.Url)
+	method := t.MethodName()
+	if method == "GET" || method == "HEAD" || method == "OPTIONS" {
+		if t.Data != "" {
+			return errors.New("Test method is " + method + ", 'data' field is not allowed: " + t.Url)
+		}
+		if t.Type != "" {
+			return errors.New("Test method is " + method + ", 'type' field is not allowed: " + t.Url)
+		}
 	}
 
 	scheme := regexp.MustCompile("^https?:")
