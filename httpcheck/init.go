@@ -16,7 +16,7 @@ var ServerTimeout uint = 120 // Timeout for a server's tests (seconds)
 var Verbose = false          // If true, every request is printed to standard output
 
 var client http.Client
-var version = "httpcheck/2.0"
+var version = "httpcheck/2.1"
 
 // Set up a HTTP client with a cookie jar
 func init() {
