@@ -53,3 +53,21 @@ func TestMethodName(t *testing.T) {
 		}
 	}
 }
+
+func TestContentType(t *testing.T) {
+	cases := []struct {
+		input  Test
+		expect string
+	}{
+		{Test{}, ""},
+		{Test{Method: "GET"}, ""},
+		{Test{Method: "POST"}, "application/x-www-form-urlencoded"},
+		{Test{Method: "POST", Type: "text/xml"}, "text/xml"},
+	}
+	for _, c := range cases {
+		result := c.input.ContentType()
+		if result != c.expect {
+			t.Error("Test.ContentType() ", c.input.Type, "should return", c.expect, "but got", result)
+		}
+	}
+}
