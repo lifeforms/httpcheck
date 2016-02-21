@@ -11,7 +11,7 @@ type Manifest []Server
 
 // SetBaseURL walks through all tests and prefixes any relative URLs (e.g. '/') with a base URL.
 func (m *Manifest) SetBaseURL(baseurl string) {
-	scheme := regexp.MustCompile("^https?:")
+	scheme := regexp.MustCompile("(?i)^https?:")
 	for i := range *m {
 		for j := range (*m)[i].Scenarios {
 			for k := range (*m)[i].Scenarios[j].Tests {
