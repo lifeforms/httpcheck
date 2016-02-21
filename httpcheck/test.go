@@ -53,6 +53,10 @@ func (t Test) Test() (err error) {
 }
 
 func (t Test) Validate() error {
+	if t.Url == "" {
+		return errors.New("Test is missing an URL")
+	}
+
 	if t.MethodName() == "GET" && t.Data != "" {
 		return errors.New("Test method is GET, 'data' field is not allowed: " + t.Url)
 	}
