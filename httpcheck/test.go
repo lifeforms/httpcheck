@@ -15,14 +15,13 @@ type Method int
 
 // A single HTTP action, with the expected results.
 type Test struct {
-	Url           string            // A fully specified URL including the protocol
-	Content       string            ",omitempty" // Expected content as a regexp, e.g. "Hello World"
-	Code          int               ",omitempty" // Expected HTTP response code
-	Method        string            ",omitempty" // HTTP method, i.e. "GET" (default) or "POST"
-	Type          string            ",omitempty" // Optional value for Content-Type header
-	Data          string            ",omitempty" // Optional post data
-	Headers       map[string]string ",omitempty" // Optional headers to add to the request
-	SkipSSLVerify bool              ",omitempty" // If true, SSL server verification is skipped
+	Url     string            // A fully specified URL including the protocol
+	Content string            ",omitempty" // Expected content as a regexp, e.g. "Hello World"
+	Code    int               ",omitempty" // Expected HTTP response code
+	Method  string            ",omitempty" // HTTP method, i.e. "GET" (default) or "POST"
+	Type    string            ",omitempty" // Optional value for Content-Type header
+	Data    string            ",omitempty" // Optional post data
+	Headers map[string]string ",omitempty" // Optional headers to add to the request
 }
 
 // Test makes a HTTP call and checks the response
