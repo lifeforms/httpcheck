@@ -13,6 +13,8 @@ func TestSetBaseURL(t *testing.T) {
 		{"/", "http://base", "http://base/"},
 		{"", "http://base/", "http://base/"},
 		{"/", "http://base/", "http://base/"},
+		{"foo", "http://base/", "http://base/foo"},
+		{"/foo", "http://base/", "http://base/foo"},
 		{"http://example.com", "http://base/", "http://example.com"},
 		{"https://example.com", "http://base/", "https://example.com"},
 		{"HTTP://example.com", "http://base/", "HTTP://example.com"},
