@@ -1,7 +1,7 @@
 package httpcheck
 
 import (
-	"code.google.com/p/go.net/publicsuffix"
+	"golang.org/x/net/publicsuffix"
 	"log"
 	"net/http"
 	"net/http/cookiejar"
