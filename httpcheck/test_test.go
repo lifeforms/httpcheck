@@ -25,6 +25,8 @@ func TestValidateBad(t *testing.T) {
 func TestValidateGood(t *testing.T) {
 	bad := []Test{
 		Test{Url: "http://example/"},
+		Test{Url: "https://example/"},
+		Test{Url: "httP://example/"},
 		Test{Url: "http://example/", Method: ""},
 		Test{Url: "http://example/", Method: "GET"},
 		Test{Url: "http://example/", Method: "GET", Data: ""},

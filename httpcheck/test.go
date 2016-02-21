@@ -66,7 +66,7 @@ func (t Test) Validate() error {
 		}
 	}
 
-	scheme := regexp.MustCompile("^https?:")
+	scheme := regexp.MustCompile("(?i)^https?:")
 	if !scheme.MatchString(t.Url) {
 		return errors.New("URL is not absolute, must specify a base URL (-u): " + t.Url)
 	}
