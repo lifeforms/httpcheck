@@ -9,6 +9,11 @@ func TestValidateBad(t *testing.T) {
 		Test{Url: "/"},
 		Test{Url: "/foo"},
 		Test{Url: "http://example/", Method: "GET", Data: "foo"},
+		Test{Url: "http://example/", Method: "GET", Type: "text/xml"},
+		Test{Url: "http://example/", Method: "HEAD", Data: "foo"},
+		Test{Url: "http://example/", Method: "HEAD", Type: "text/xml"},
+		Test{Url: "http://example/", Method: "OPTIONS", Data: "foo"},
+		Test{Url: "http://example/", Method: "OPTIONS", Type: "text/xml"},
 	}
 	for _, test := range bad {
 		if test.Validate() == nil {
@@ -23,7 +28,9 @@ func TestValidateGood(t *testing.T) {
 		Test{Url: "http://example/", Method: ""},
 		Test{Url: "http://example/", Method: "GET"},
 		Test{Url: "http://example/", Method: "GET", Data: ""},
+		Test{Url: "http://example/", Method: "GET", Headers: map[string]string{"Cookie": "foo=bar"}},
 		Test{Url: "http://example/", Method: "POST"},
+		Test{Url: "http://example/", Method: "POST", Data: ""},
 		Test{Url: "http://example/", Method: "POST", Data: "foo=bar"},
 		Test{Url: "http://example/", Method: "POST", Data: "<foo></foo>", Type: "text/xml"},
 	}
