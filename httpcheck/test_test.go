@@ -23,7 +23,7 @@ func TestValidateBad(t *testing.T) {
 }
 
 func TestValidateGood(t *testing.T) {
-	bad := []Test{
+	good := []Test{
 		Test{Url: "http://example/"},
 		Test{Url: "https://example/"},
 		Test{Url: "httP://example/"},
@@ -36,7 +36,7 @@ func TestValidateGood(t *testing.T) {
 		Test{Url: "http://example/", Method: "POST", Data: "foo=bar"},
 		Test{Url: "http://example/", Method: "POST", Data: "<foo></foo>", Type: "text/xml"},
 	}
-	for _, test := range bad {
+	for _, test := range good {
 		if test.Validate() != nil {
 			t.Error("Test.Validate() should return nil:", test)
 		}
