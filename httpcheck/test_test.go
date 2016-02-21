@@ -33,3 +33,23 @@ func TestValidateGood(t *testing.T) {
 		}
 	}
 }
+
+func TestMethodName(t *testing.T) {
+	cases := []struct {
+		input  Test
+		expect string
+	}{
+		{Test{}, "GET"},
+		{Test{Method: ""}, "GET"},
+		{Test{Method: "get"}, "get"},
+		{Test{Method: "GET"}, "GET"},
+		{Test{Method: "POST"}, "POST"},
+		{Test{Method: "COOK"}, "COOK"},
+	}
+	for _, c := range cases {
+		result := c.input.MethodName()
+		if result != c.expect {
+			t.Error("Test.MethodName ", c.input.Method, "should return", c.expect, "but got", result)
+		}
+	}
+}
